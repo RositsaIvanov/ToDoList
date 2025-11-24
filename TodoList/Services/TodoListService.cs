@@ -10,6 +10,7 @@ namespace TodoList.Services
         private readonly IList<TodoItem> _items = new List<TodoItem>();
         private const decimal MaxAllowedProgressBeforeLock = 50m;
         private const int BarWidth = 50;
+        public IReadOnlyList<TodoItem> Items => _items.ToList();
 
         public TodoListService(ITodoListRepository repository)
         {
