@@ -1,6 +1,8 @@
-﻿using Serilog;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Serilog;
+using TodoList.Interfaces;
 using TodoList.Repositories;
-using TodoList.Services;
+using TodoList.Setup;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -11,8 +13,10 @@ Log.Information("Application Starting");
 
 try
 {
-    var repository = new TodoListRepository();
-    var todoList = new TodoListService(repository);
+    IServiceCollection services = DependencyInjection.ConfigureServices();
+    ServiceProvider servicesProvider = services.BuildServiceProvider();
+    var repository = servicesProvider.GetRequiredService<ITodoListRepository>();
+    var todoList = servicesProvider.GetRequiredService<ITodoList>();
 
     while (true)
     {
@@ -122,7 +126,7 @@ static DateTime ReadDate(string label)
     }
 }
 
-static void AddItem(TodoListService service, TodoListRepository repo)
+static void AddItem(ITodoList service, ITodoListRepository repo)
 {
     Console.Write("Enter title: ");
     string? title = Console.ReadLine();
@@ -140,7 +144,7 @@ static void AddItem(TodoListService service, TodoListRepository repo)
     Log.Information("Item added: {Title}", title);
 }
 
-static void UpdateItem(TodoListService service)
+static void UpdateItem(ITodoList service)
 {
     int id = ReadInt("Enter item ID to update: ");
 
@@ -151,14 +155,14 @@ static void UpdateItem(TodoListService service)
     Log.Information("Item updated: {Id}", id);
 }
 
-static void RemoveItem(TodoListService service)
+static void RemoveItem(ITodoList service)
 {
     int id = ReadInt("Enter item ID to remove: ");
     service.RemoveItem(id);
     Log.Information("Item removed: {Id}", id);
 }
 
-static void RegisterProgress(TodoListService service)
+static void RegisterProgress(ITodoList service)
 {
     int id = ReadInt("Enter item ID: ");
     DateTime date = ReadDate("Enter date (yyyy-MM-dd): ");
