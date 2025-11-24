@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TodoList.Interfaces;
-using TodoList.Repositories;
-using TodoList.Services;
+using ToDoList.Repository;
+using ToDoList.Application;
+using ToDoList.Domain.Contracts;
 
-namespace TodoList.Setup;
+namespace ToDoList.Setup;
 
 internal class DependencyInjection
 {
@@ -11,7 +11,8 @@ internal class DependencyInjection
     {
         var services = new ServiceCollection();
         services.AddSingleton<ITodoListRepository, TodoListRepository>();
-        services.AddSingleton<ITodoList, TodoListService>();
+        services.AddSingleton<IToDoList, Application.Impl.ToDoListService>();
+        services.AddSingleton<IToDoListService, Domain.Impl.ToDoListService>();
         return services;
     }
 }

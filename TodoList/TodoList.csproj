@@ -14,4 +14,10 @@
     <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ToDoList.Application.Impl\ToDoList.Application.Impl.csproj" />
+    <ProjectReference Include="..\ToDoList.Domain.Impl\ToDoList.Domain.Impl.csproj" />
+    <ProjectReference Include="..\ToDoListRepository\ToDoList.Repository.csproj" />
+  </ItemGroup>
+
 </Project>
