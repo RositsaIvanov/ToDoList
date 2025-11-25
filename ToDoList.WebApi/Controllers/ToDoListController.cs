@@ -34,6 +34,14 @@ public class ToDoListController : ControllerBase
         return Ok(item);
     }
 
+    [HttpGet("nextId")]
+    public IActionResult GetNextId()
+    {
+        var nextId = _todoList.GetAllItems().Count();
+
+        return Ok(nextId);
+    }
+
     [HttpPost]
     public IActionResult Create([FromBody] CreateRequest request)
     {
