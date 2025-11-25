@@ -1,0 +1,96 @@
+body {
+    font-family: Inter, Arial, sans-serif;
+    margin: 20px;
+    color: #111
+}
+
+.controls {
+    margin-bottom: 12px
+}
+
+.main-grid {
+    display: flex;
+    gap: 18px
+}
+
+.card {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #e6e6e6;
+    border-radius: 8px;
+    background: #fff
+}
+
+#formCard {
+    width: 380px
+}
+
+label {
+    display: block;
+    margin-top: 8px
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #dcdcdc
+}
+
+button {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 0;
+    background: #2563eb;
+    color: #fff;
+    cursor: pointer
+}
+
+.small {
+    font-size: .85rem;
+    color: #666
+}
+
+
+/* progress bar */
+.progress-row {
+    margin-top: 8px
+}
+
+.progress-bar {
+    height: 18px;
+    border-radius: 999px;
+    background: #f3f4f6;
+    overflow: hidden
+}
+
+.fill {
+    height: 100%;
+    width: 0%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+    color: #fff;
+    font-weight: 600;
+    transition: width .6s
+}
+
+    .fill.low {
+        background: linear-gradient(90deg,#f97316,#f43f5e)
+    }
+
+    .fill.mid {
+        background: linear-gradient(90deg,#f59e0b,#84cc16)
+    }
+
+    .fill.high {
+        background: linear-gradient(90deg,#10b981,#059669)
+    }
+
+
+@media(max-width:900px) {
+    .main-grid {
+        flex-direction: column
+    }
+}

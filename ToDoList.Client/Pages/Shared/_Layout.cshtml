@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ToDoList.Client.styles.css" asp-append-version="true" />
+    <style>
+        .form-buttons {
+            display: flex;
+            gap: 15px; /* Adds spacing between buttons */
+            justify-content: center; /* Centers the buttons horizontally */
+            margin-top: 15px; /* Adds spacing above the buttons */
+        }
+
+        .form-buttons button {
+            padding: 10px 20px; /* Adjusts button size */
+            font-size: 14px; /* Makes text more readable */
+            border-radius: 5px; /* Adds rounded corners */
+            border: none; /* Removes default border */
+            cursor: pointer; /* Adds pointer cursor */
+        }
+
+        .form-buttons .btn-save {
+            background-color: #007bff; /* Blue color for Save button */
+            color: white;
+        }
+
+        .form-buttons .btn-cancel {
+            background-color: #dc3545; /* Red color for Cancel button */
+            color: white;
+        }
+
+        .form-buttons .btn-add {
+            background-color: #28a745; /* Green color for Add Progression button */
+            color: white;
+        }
+
+        .form-buttons button:hover {
+            opacity: 0.9; /* Adds hover effect */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+           
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
