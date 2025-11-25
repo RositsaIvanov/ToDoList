@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ToDoList.Repository;
+
 
 
 namespace ToDoList.Client.Pages
@@ -7,22 +7,31 @@ namespace ToDoList.Client.Pages
     public class IndexModel : PageModel
     {
         private readonly IConfiguration _config;
-        private readonly ITodoListRepository _repository;
+        private readonly IHttpClientFactory _httpClientFactory;
         public string ApiBaseUrl { get; }
         public List<string> Categories { get; set; } = new();
 
 
-        public IndexModel(IConfiguration config, ITodoListRepository repository)
+        public IndexModel(IConfiguration config, IHttpClientFactory httpClientFactory)
         {
             _config = config;
-            _repository = repository;
+            _httpClientFactory = httpClientFactory;
             ApiBaseUrl = _config.GetValue<string>("ApiBaseUrl") ?? "https://localhost:7126/api/todolist";
         }
 
 
-        public void OnGet()
+        public async Task OnGet()
         {
-            Categories = _repository.GetCategories();
+            var client = _httpClientFactory.CreateClient();
+            try 
+            {
+                Categories = await client.GetFromJsonAsync<List<string>>($"{ApiBaseUrl}/categories") ?? new List<string>();
+            }
+            catch (Exception ex)
+            {
+                Categories = new List<string>();
+                Console.WriteLine($"Error fetching categories: {ex.Message}");
+            }
         }
     }
 }

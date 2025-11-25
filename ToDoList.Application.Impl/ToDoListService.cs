@@ -56,4 +56,9 @@ public class ToDoListService : IToDoList
     {
         _service.PrintItems();
     }
+
+    public IEnumerable<string> GetCategories()
+    {
+        return _service.GetCategories();
+    }
 }

@@ -19,7 +19,6 @@ public class ToDoListService : IToDoListService
     public void AddItem(ToDoItem item)
     {
         ValidateCategory(item.Category);
-
         _items.Add(item);
     }
 
@@ -74,6 +73,11 @@ public class ToDoListService : IToDoListService
                 PrintProgressBar(accumulatedPercent, progression.Date);
             }
         }
+    }
+
+    public IEnumerable<string> GetCategories()
+    {
+        return _repository.GetCategories();
     }
 
     private void ValidateCategory(string category)

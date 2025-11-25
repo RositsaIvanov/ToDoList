@@ -1,11 +1,11 @@
-using ToDoList.Repository;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddRazorPages();
-builder.Services.AddSingleton<ITodoListRepository, TodoListRepository>();
+builder.Services.AddHttpClient();
 
 builder.Services.AddCors(options =>
 {

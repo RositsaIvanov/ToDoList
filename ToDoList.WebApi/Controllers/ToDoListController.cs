@@ -42,6 +42,13 @@ public class ToDoListController : ControllerBase
         return Ok(nextId);
     }
 
+    [HttpGet("categories")]
+    public IActionResult GetCategories()
+    {
+        var categories = _todoList.GetCategories();
+        return Ok(categories);
+    }
+
     [HttpPost]
     public IActionResult Create([FromBody] CreateRequest request)
     {
