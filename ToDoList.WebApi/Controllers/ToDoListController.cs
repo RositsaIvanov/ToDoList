@@ -37,8 +37,7 @@ public class ToDoListController : ControllerBase
     [HttpGet("nextId")]
     public IActionResult GetNextId()
     {
-        var nextId = _todoList.GetAllItems().Count();
-
+        var nextId = _repository.GetNextId();
         return Ok(nextId);
     }
 
@@ -52,11 +51,10 @@ public class ToDoListController : ControllerBase
     [HttpPost]
     public IActionResult Create([FromBody] CreateRequest request)
     {
-        var id = _repository.GetNextId();
         try
         {
             _todoList.AddItem(request.Id, request.Title, request.Description, request.Category);
-            return CreatedAtAction(nameof(Create), new { id }, request);
+            return CreatedAtAction(nameof(GetById), new { id = request.Id }, request);
         }
         catch (Exception ex)
         {
