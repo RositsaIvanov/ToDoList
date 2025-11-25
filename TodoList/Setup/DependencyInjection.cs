@@ -13,6 +13,8 @@ internal class DependencyInjection
         services.AddSingleton<ITodoListRepository, TodoListRepository>();
         services.AddSingleton<IToDoList, Application.Impl.ToDoListService>();
         services.AddSingleton<IToDoListService, Domain.Impl.ToDoListService>();
+        services.AddSingleton<IToDoItemMapper, Application.Impl.ToDoItemMapper>();
+        services.AddSingleton<IProgressionMapper, Application.Impl.ProgressionMapper>();
         return services;
     }
 }

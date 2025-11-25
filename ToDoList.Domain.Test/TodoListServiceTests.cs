@@ -220,21 +220,4 @@ public class TodoListServiceTests
 
         Assert.Equal("New Desc", _service.GetItem(id).Description);
     }
-
-    [Fact]
-    public void PrintItems_DoesNotThrowsException()
-    {
-        var id = 1;
-        var item = new ToDoItem
-        {
-            Id = id,
-            Title = "Task",
-            Description = "Lorem Ipsum",
-            Category = "Work"
-        };
-        _service.AddItem(item);
-
-        var exception = Record.Exception(() => _service.PrintItems());
-        Assert.Null(exception);
-    }
 }

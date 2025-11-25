@@ -10,6 +10,5 @@ public interface IToDoList
     void UpdateItem(int id, string description);
     void RemoveItem(int id);
     void RegisterProgression(int id, DateTime dateTime, decimal percent);
-    void PrintItems();
     IEnumerable<string> GetCategories();
 }

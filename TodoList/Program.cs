@@ -44,7 +44,7 @@ try
                     break;
 
                 case "5":
-                    todoList.PrintItems();
+                    PrintItems(todoList);
                     break;
 
                 case "6":
@@ -82,6 +82,35 @@ static void PrintMenu()
     Console.WriteLine("5. Print Items");
     Console.WriteLine("6. Exit");
     Console.Write("Select an option: ");
+}
+
+static void PrintItems(IToDoList todoList)
+{
+    const int barWidth = 50;
+    var items = todoList.GetAllItems().OrderBy(i => i.Id);
+    
+    if (!items.Any())
+    {
+        Console.WriteLine("No items found.");
+        return;
+    }
+
+    foreach (var item in items)
+    {
+        Console.WriteLine($"{item.Id}) {item.Title} - {item.Description} ({item.Category}) Completed:{item.IsCompleted}");
+
+        decimal accumulatedPercent = 0;
+        if (item.Progressions != null)
+        {
+            foreach (var progression in item.Progressions)
+            {
+                accumulatedPercent += progression.Percent;
+                int filled = (int)Math.Round(barWidth * (accumulatedPercent / 100));
+                string bar = new string('O', filled).PadRight(barWidth, ' ');
+                Console.WriteLine($"{progression.Date} - {accumulatedPercent}% |{bar}|");
+            }
+        }
+    }
 }
 
 static int ReadInt(string label)

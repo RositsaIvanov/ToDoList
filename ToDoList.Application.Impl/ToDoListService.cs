@@ -52,11 +52,6 @@ public class ToDoListService : IToDoList
         _service.RegisterProgression(id, dateTime, percent);
     }
 
-    public void PrintItems()
-    {
-        _service.PrintItems();
-    }
-
     public IEnumerable<string> GetCategories()
     {
         return _service.GetCategories();

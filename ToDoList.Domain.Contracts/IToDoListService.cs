@@ -9,6 +9,5 @@ public interface IToDoListService
     ToDoItem GetItem(int id);
     IEnumerable<ToDoItem> GetAllItems ();
     void RegisterProgression(int id, DateTime dateTime, decimal percent);
-    void PrintItems();
     IEnumerable<string> GetCategories();
 }

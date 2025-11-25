@@ -106,18 +106,4 @@ public class ToDoListController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-
-    [HttpGet("print")]
-    public IActionResult Print()
-    {
-        try
-        {
-            _todoList.PrintItems(); // writes to console
-            return Ok("Items printed to console.");
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
-    }
 }

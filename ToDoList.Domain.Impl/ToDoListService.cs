@@ -9,7 +9,6 @@ public class ToDoListService : IToDoListService
     private readonly ITodoListRepository _repository;
     private readonly IList<ToDoItem> _items = new List<ToDoItem>();
     private const decimal MaxAllowedProgressBeforeLock = 50m;
-    private const int BarWidth = 50;
 
     public ToDoListService(ITodoListRepository repository)
     {
@@ -60,21 +59,6 @@ public class ToDoListService : IToDoListService
         item.AddProgression(dateTime, percent);
     }
 
-    public void PrintItems()
-    {
-        foreach (var item in _items.OrderBy(i => i.Id))
-        {
-            PrintItemHeader(item);
-
-            decimal accumulatedPercent = 0;
-            foreach (var progression in item.Progressions)
-            {
-                accumulatedPercent += progression.Percent;
-                PrintProgressBar(accumulatedPercent, progression.Date);
-            }
-        }
-    }
-
     public IEnumerable<string> GetCategories()
     {
         return _repository.GetCategories();
@@ -96,18 +80,5 @@ public class ToDoListService : IToDoListService
             throw new InvalidOperationException(message);
 
         return item;
-    }
-
-    private void PrintItemHeader(ToDoItem item)
-    {
-        Console.WriteLine($"{item.Id}) {item.Title} - {item.Description} ({item.Category}) Completed:{item.IsCompleted}");
-    }
-
-    private void PrintProgressBar(decimal accumulated, DateTime date)
-    {
-        int filled = (int)Math.Round(BarWidth * (accumulated / 100));
-        string bar = new string('O', filled).PadRight(BarWidth, ' ');
-
-        Console.WriteLine($"{date} - {accumulated}% |{bar}|");
     }
 }
