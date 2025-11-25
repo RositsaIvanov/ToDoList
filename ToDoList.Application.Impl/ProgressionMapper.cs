@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ToDoList.Domain;
-using ToDoList.Domain.Models;
+﻿using ToDoList.Domain.Models;
 using ToDoList.Application.Models;
 
 namespace ToDoList.Application.Impl

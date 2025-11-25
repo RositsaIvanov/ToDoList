@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ToDoList.Application;
+using ToDoList.Application.Models;
 using ToDoList.Repository;
 
 [ApiController]
@@ -15,15 +16,32 @@ public class ToDoListController : ControllerBase
         _repository = repository;
     }
 
-    [HttpPost]
-    public IActionResult CreateTodo([FromBody] CreateTodoItemDto item)
+    [HttpGet]
+    public IActionResult GetAll()
     {
-        // Typically, repo would provide a new ID and categories; you may inject that via a scoped service instead.
-        var id = item.Id; // Replace with repo.GetNextId() if you inject the repo
+        var items = _todoList.GetAllItems();
+
+        return Ok(items);
+    }
+
+    [HttpGet("{id}")]
+    public IActionResult GetById(int id)
+    {
+        var item = _todoList.GetItem(id);
+        if (item == null)
+            return NotFound("Item not found.");
+
+        return Ok(item);
+    }
+
+    [HttpPost]
+    public IActionResult Create([FromBody] CreateRequest request)
+    {
+        var id = _repository.GetNextId();
         try
         {
-            _todoList.AddItem(id, item.Title, item.Description, item.Category);
-            return CreatedAtAction(nameof(GetTodo), new { id }, item);
+            _todoList.AddItem(request.Id, request.Title, request.Description, request.Category);
+            return CreatedAtAction(nameof(Create), new { id }, request);
         }
         catch (Exception ex)
         {
@@ -32,20 +50,12 @@ public class ToDoListController : ControllerBase
         }
     }
 
-    [HttpGet("{id}")]
-    public IActionResult GetTodo(int id)
-    {
-        // Implement method to return a single todo item.
-        // Example: FindById and map to DTO.
-        return Ok();
-    }
-
-    [HttpPost("{id}/progression")]
-    public IActionResult RegisterProgression(int id, [FromBody] RegisterProgressionDto progression)
+    [HttpPut("{id}")]
+    public IActionResult Update(int id, [FromBody] UpdateRequest request)
     {
         try
         {
-            _todoList.RegisterProgression(id, progression.DateTime, progression.Percent);
+            _todoList.UpdateItem(id, request.Description);
             return Ok();
         }
         catch (Exception ex)
@@ -54,9 +64,45 @@ public class ToDoListController : ControllerBase
         }
     }
 
-    // Additional endpoints: update, delete, print items, etc.
-}
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
+        try
+        {
+            _todoList.RemoveItem(id);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 
-// DTOs (you may move these to a dedicated DTOs folder)
-public record CreateTodoItemDto(int Id, string Title, string Description, string Category);
-public record RegisterProgressionDto(DateTime DateTime, decimal Percent);
+    [HttpPost("{id}/progression")]
+    public IActionResult RegisterProgression(int id, [FromBody] RegisterProgressionRequest progression)
+    {
+        try
+        {
+            _todoList.RegisterProgression(id, progression.Date, progression.Percentage);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpGet("print")]
+    public IActionResult Print()
+    {
+        try
+        {
+            _todoList.PrintItems(); // writes to console
+            return Ok("Items printed to console.");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+}

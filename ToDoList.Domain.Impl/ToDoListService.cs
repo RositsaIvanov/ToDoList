@@ -10,7 +10,6 @@ public class ToDoListService : IToDoListService
     private readonly IList<ToDoItem> _items = new List<ToDoItem>();
     private const decimal MaxAllowedProgressBeforeLock = 50m;
     private const int BarWidth = 50;
-    public IReadOnlyList<ToDoItem> Items => _items.ToList();
 
     public ToDoListService(ITodoListRepository repository)
     {
@@ -22,6 +21,19 @@ public class ToDoListService : IToDoListService
         ValidateCategory(item.Category);
 
         _items.Add(item);
+    }
+
+    public ToDoItem GetItem(int id)
+    {
+        var item = _items.FirstOrDefault(i => i.Id == id);
+        if (item == null)
+            throw new ArgumentException("Item not found.");
+        return item;
+    }
+
+    public IEnumerable<ToDoItem> GetAllItems()
+    {
+        return _items.ToList();
     }
 
     public void UpdateItem(int id, string description)

@@ -43,7 +43,7 @@ public class TodoListServiceTests
         _service.AddItem(item);
 
         // Assert
-        Assert.Single(_service.Items);
+        Assert.Single(_service.GetAllItems());
     }
 
     [Fact]
@@ -83,7 +83,7 @@ public class TodoListServiceTests
         _service.RegisterProgression(id, new DateTime(2025, 3, 20), 20);
 
         // Assert
-        var res = _service.Items[0];
+        var res = _service.GetItem(id);
         Assert.True(res.IsCompleted);
     }
 
@@ -173,7 +173,7 @@ public class TodoListServiceTests
 
         _service.RemoveItem(id);
 
-        Assert.Empty(_service.Items);
+        Assert.Empty(_service.GetAllItems());
     }
 
 
@@ -218,7 +218,7 @@ public class TodoListServiceTests
 
         _service.UpdateItem(id, "New Desc");
 
-        Assert.Equal("New Desc", _service.Items[0].Description);
+        Assert.Equal("New Desc", _service.GetItem(id).Description);
     }
 
     [Fact]

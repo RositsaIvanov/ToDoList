@@ -11,7 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ToDoList.Application.Impl\ToDoList.Application.Impl.csproj" />
     <ProjectReference Include="..\ToDoList.Application\ToDoList.Application.csproj" />
+    <ProjectReference Include="..\ToDoList.Domain.Contracts\ToDoList.Domain.Contracts.csproj" />
+    <ProjectReference Include="..\ToDoList.Domain.Impl\ToDoList.Domain.Impl.csproj" />
     <ProjectReference Include="..\ToDoListRepository\ToDoList.Repository.csproj" />
   </ItemGroup>
 
